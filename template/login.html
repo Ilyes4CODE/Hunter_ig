@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+  <link rel="icon" href="{% static 'images/pngwing.com.png' %}" type="image/png">
+  <title>Login • Instagram</title>
+  <style>
+    .c-btn[disabled] {
+      opacity: 0.5; /* Adjust the opacity to visually indicate the button is disabled */
+       /* Change the cursor to not-allowed */
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      var usernameInput = document.querySelector('input[name="username"]');
+      var passwordInput = document.querySelector('input[name="password"]');
+      var loginBtn = document.querySelector('.c-btn');
+
+      function updateLoginBtn() {
+        if (usernameInput.value === '' || passwordInput.value.length < 6) {
+          loginBtn.disabled = true;
+          loginBtn.classList.add('disabled'); // Add disabled class when button is disabled
+        } else {
+          loginBtn.disabled = false;
+          loginBtn.classList.remove('disabled'); // Remove disabled class when button is enabled
+        }
+      }
+
+      usernameInput.addEventListener('input', updateLoginBtn);
+      passwordInput.addEventListener('input', updateLoginBtn);
+
+      // Initial state check
+      updateLoginBtn();
+    }
+  </script>
+</head>
+<body>
+  <main class="l-main">
+      
+      <div class="l-user">
+        <div class="c-panel group">
+          <img class="c-panel__img" src="{% static 'assets/img/instagram.svg' %}" alt="Instagram">
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="c-panel__form">
+              <input type="text" class="c-panel__input" name="username" placeholder="Phone number, username, or email">
+              <input type="password" class="c-panel__input" name="password" placeholder="Password">
+              <button type="submit" class="c-btn" style="border:None;" disabled>Login</button>
+              <span class="c-panel__span">OR</span>
+            </div>
+          </form>
+          <a href="#" class="c-panel__facebook">Login with Facebook</a><br>
+          {% for message in messages  %}
+          <p style="color:red;">{{message}}</p>
+          {% endfor %}
+          <a href="#" class="c-panel__forgot">Forgot password?</a>
+        </div>
+        <div class="c-signup group">
+          <p>Don't have an account? <span>Sign up</span></p>
+        </div>
+        <div class="c-app">
+          <p>Get the app.</p>
+          <div class="c-app__download">
+            <img src="{% static 'assets/img/apple.png' %}" alt="Apple Store">
+            <img src="{% static 'assets/img/google.png' %}" alt="Google Play">
+          </div>
+        </div>
+      </div>
+  </main>
+</body>
+</html>
